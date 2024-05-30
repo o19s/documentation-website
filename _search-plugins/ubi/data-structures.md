@@ -8,7 +8,7 @@ nav_order: 7
 
 # Sample client data structures
 The client data structures can be used to create events that follow the [UBI event schema specification](https://github.com/o19s/opensearch-ubi), 
-which is describedin further detail [here]({{site.url}}{{site.baseurl}}/search-plugins/ubi/schemas/).
+which is described in further detail [here]({{site.url}}{{site.baseurl}}/search-plugins/ubi/schemas/).
 
 The developer provides an implementation for the following functions:
 - `getClientId()`
