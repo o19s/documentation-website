@@ -16,7 +16,7 @@ Although it's trivial on the server side to find queries with no results, we can
 ```sql
 select
    count(0)
-from .ubi_log_queries
+from ubi_queries
 where query_response_objects_ids is null
 order by user_id
 ```
@@ -38,7 +38,7 @@ Both client and server-side queries should return the same number.
 ```sql
 select 
 	message, count(0) Total  
-from .ubi_log_events 
+from ubi_events
 where 
 	action_name='on_search' 
 group by message 
@@ -76,7 +76,7 @@ To make a pie chart like widget on all the most common events:
 ```sql
 select 
 	action_name, count(0) Total  
-from .ubi_log_events 
+from ubi_events
 group by action_name
 order by Total desc
 ```
@@ -119,7 +119,7 @@ logout|408
 Find a search in the query log:
 ```sql
 select *
-from .ubi_log_queries
+from ubi_queries
 where query_id ='1065c70f-d46a-442f-8ce4-0b5e7a71a892'
 order by timestamp
 ```

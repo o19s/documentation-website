@@ -21,12 +21,6 @@ UBI is not functional unless the links between the following fields are consiste
 
 To summarize: the `query_id` signals the beginning of a `client_id`'s *Search Journey* every time a user queries the search index, the `action_name` tells us how the user is interacting with the query results within the application, and [`event_attributes.object.object_id`](#object_id) is referring to the precise query result that the user interacts with.
 
-{% comment %}
-### *************************
-# TODO: rework this section with new parameter passing framework
-### *************************
-{% endcomment %}
-
 ## Important UBI roles
 - **Search Client**: in charge of searching, and then recieving *objects* from some document index in OpenSearch.
  (1, 2, *5* and 7, in following sections)
@@ -134,8 +128,8 @@ Since UBI manages the **UBI Queries** store, the developer should never have to 
 - `query_id` (events and queries) 
 	&ensp; A unique ID of the query provided by the client or generated automatically. The same query text issued multiple times would generate different `query_id`. 
 	
-- `client_id` (events)
-		&ensp; A user/client ID provided by the client application
+- `client_id` (events and queries)
+  &ensp; A user/client ID provided by the client application
 
 - `query_response_objects_ids` (queries)
 	&ensp; This is an array of the `object_id`'s. This *could* be the same id as the `_id` but is meant to be the externally valid id of document/item/product.
@@ -145,85 +139,85 @@ Since UBI manages the **UBI Queries** store, the developer should never have to 
 ### 2) **UBI events**
 This is the event store that the client side directly indexes events to, linking the event [`action_name`](#action_name), [`object_id`](#object_id)'s and [`query_id`](#query_id)'s together with any other important event information.
 Since this schema is dynamic, the developer can add any new fields and structures (such as *user* information, *geo-location* information) at index time that are not in the current **UBI Events** [schema](https://github.com/o19s/opensearch-ubi/tree/2.14.0/src/main/resources/events-mapping.json):
+
+ <p id="application"> </p>
+
 - `application` 
- <p id="application">
-	
  &ensp; (size 100) - name of the application tracking UBI events (e.g. `amazon-shop`, `ABC-microservice`)
+ 
+ <p id="action_name"> </p>
+
 - `action_name` 
- <p id="action_name">
-	
  &ensp; (size 100) - any name you want to call your event such as `click`, `watch`, `purchase`, and `add_to_cart`, but one could map these to any common *JavaScript* events, or debugging events.
-_TODO: How to formalize? A list of standard ones and then custom ones._  
+  &ensp; _TODO: How to formalize? A list of standard ones and then custom ones._  
+
+ <p id="query_id"> </p>
 
 - `query_id` 
- <p id="query_id">
+  &ensp; (size 100) - ID for some query. 
+  &ensp;Either the client provides this, or the `query_id` is generated at index time by the **UBI Plugin**.
 
-	&ensp; (size 100) - ID for some query. Either the client provides this, or the `query_id` is generated at index time by the **UBI Plugin**.
- 
-	The `client_id` must be consistent in both the **UBI Queries** and **UBI Events** stores.
+<p id="client_id"> </p>
+
+- `client_id`
+  &ensp; A user/client ID provided by the client application
+  &ensp;The `client_id` must be consistent in both the **UBI Queries** and **UBI Events** indexes.
 
 - `timestamp`: 
   &ensp; UTC-based, UNIX epoch time.
 
 - `message_type` 
- 
 	&ensp; (size 100) - originally thought of in terms of ERROR, INFO, WARN, but could be anything else useful such as `QUERY` or `CONVERSION`. 
-	Can be used to group `action_name` together in logical bins.  _Thinking this should be backend logic in analysis_
+	&ensp; Can be used to group `action_name` together in logical bins. 
 
 - `message` 
- 
 	&ensp; (size 256) - optional text message for the log entry. For example, with a `message_type` of `INFO`, people might expect an informational or debug type text for this field, but a `message_type` of `QUERY`, we would expect the text to be more about what the user is searching on.
 
-`event_attributes` has dynamic mapping, meaning if events are indexed with many custom fields, the index could bloat quickly with many new fields.
-{: .warning} 
 
-- `event_attributes`'s structure that describes any important context about the event. Within it, it has 2 primary structures `position` and `object`, as well as being extensible to add anymore relevant, custom, information about the event can be stored such as timing informaiton, individual user or session information, etc.  
+- `event_attributes`'s 
+  &ensp;structure that describes any important context about the event. Within it, it has 2 primary structures `position` and `object`, as well as being extensible to add anymore relevant, custom, information about the event can be stored such as timing informaiton, individual user or session information, etc.  
+  &ensp; Since this has a dynamic mapping, the index _could_ become bloated with many new fields
+  {: .warning} 
 
- The two primary structures in the `event_attributes`:
- - **`event_attributes.position`** - structure that contains information on the location of the event origin, such as screen *x,y* coordinates, or the *n-th* object out of 10 results, ....
+ - **`event_attributes.position`** 
+   &ensp; structure that contains information on the location of the event origin, such as screen *x,y* coordinates, or the *n-th* object out of 10 results, ....
  
    - `event_attributes.position.ordinal` 
-  
-  &ensp; tracks the *n*th item within a list that a user could select, click (i.e. selecting the 3rd element could be event{`onClick, results[4]`})
+     &ensp; tracks the *n*th item within a list that a user could select, click (i.e. selecting the 3rd element could be event{`onClick, results[4]`})
 
-  - `event_attributes.position.{x,y}` 
-  
-  &ensp; tracks x and y values, that the client defines
+    - `event_attributes.position.{x,y}` 
+      &ensp; tracks x and y values, that the client defines
 
-  - `event_attributes.position.page_depth` 
-  
-  &ensp; tracks page depth of results
+    - `event_attributes.position.page_depth` 
+      &ensp; tracks page depth of results
 
-  - `event_attributes.position.scroll_depth` 
-  
-  &ensp; tracks scroll depth of page results
+    - `event_attributes.position.scroll_depth` 
+      &ensp; tracks scroll depth of page results
 
-  - `event_attributes.position.trail` 
+    - `event_attributes.position.trail` 
+      &ensp; text field for tracking the path/trail that a user took to get to this location
   
-  &ensp; text field for tracking the path/trail that a user took to get to this location
-  
-  <p id="object_id">
-
   - **`event_attributes.object`**, which contains identifying information of the object returned from the query that the user interacts with (i.e.: a book, a product, a post).
    The `object` structure has two ways to refer to the object, with `object_id` being the id that links prior queries to this object:
   
     - `event_attributes.object.internal_id` is a unique id that OpenSearch can use to internally to index the object, think the `_id` field in the indexes.
+
+      <p id="object_id">
+
     - `event_attributes.object.object_id` 
-    &ensp; is the id that a user could look up and find the object instance within the **document corpus**. Examples include: `ssn`, `isbn`, `ean`.  Variants need to be incorporated in the `object_id`, so for a t-shirt that is red, you would need SKU level as the `object_id`.
-    Initializing UBI requires mapping from the **Document Index**'s primary key to this `object_id`
+      &ensp; is the id that a user could look up and find the object instance within the **document corpus**. Examples include: `ssn`, `isbn`, `ean`.  Variants need to be incorporated in the `object_id`, so for a t-shirt that is red, you would need SKU level as the `object_id`.
+      Initializing UBI requires mapping from the **Document Index**'s primary key to this `object_id`
+      </p>
 
-   - `event_attributes.object.object_id_field`
-   
-  	&ensp; indicates the type/class of object _and_ the ID field of the search index.  
+    - `event_attributes.object.object_id_field`
+        &ensp; indicates the type/class of object _and_ the ID field of the search index.  
 
-   - `event_attributes.object.description` 
-   
-  	&ensp; optional description of the object
-   
+    - `event_attributes.object.description` 
+        &ensp; optional description of the object
 
-   - `event_attributes.object.object_detail` 
-  	
-  	&ensp; optional text for further data object details
-  	   	
-   - *extensible fields*: any new fields by any other names in the `object` that one indexes will dynamically expand this schema to that use-case.
-{: .warning}
+    - `event_attributes.object.object_detail` 
+        &ensp; optional text for further data object details
+          
+    - *extensible fields*: 
+      &ensp;any new fields by any other names in the `object` that one indexes will dynamically expand this schema to that use-case.
+      {: .warning}

@@ -13,6 +13,8 @@ This *repository* contains the OpenSearch plugin for the User Behavior Insights 
 facilitates persisting client-side events (e.g. item clicks, scroll depth) and OpenSearch queries for the purpose of analyzing the data
 to improve search relevance and user experience.
 
+[Link to repo plugin's documentation](https://github.com/o19s/opensearch-ubi)
+
 ## Quick start
 
 We need a Quick Start!!!

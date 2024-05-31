@@ -18,7 +18,7 @@ _Optionally_:
 - `getSessionId()`
 - `getPageId()`
 
-Other sample implementations can be found [here](#TODO-clients-link).
+<!-- Not needed with this page: Other sample implementations can be found [here](#TODO-clients-link). -->
 
 ```js
 /*********************************************************************************************
