@@ -1,14 +1,6 @@
----
-layout: default
-title: UBI queries with sql
-parent: User behavior insights
-has_children: false
-nav_order: 7
----
-
 # Sample UBI SQL queries
 These can be performed on the OpenSearch Dashboards/Query Workbench: 
-[http://chorus-opensearch-edition.dev.o19s.com:5601/app/opensearch-query-workbench](http://chorus-opensearch-edition.dev.o19s.com:5601/app/opensearch-query-workbench)
+http(s):\//`{server}`:5601/app/opensearch-query-workbench
 
 ## Queries with zero results
 Although it's trivial on the server side to find queries with no results, we can also get the same answer by querying the event side.
@@ -16,7 +8,7 @@ Although it's trivial on the server side to find queries with no results, we can
 ```sql
 select
    count(0)
-from ubi_queries
+from .ubi_log_queries
 where query_response_objects_ids is null
 order by user_id
 ```
@@ -38,15 +30,13 @@ Both client and server-side queries should return the same number.
 ```sql
 select 
 	message, count(0) Total  
-from ubi_events
+from .ubi_log_events 
 where 
 	action_name='on_search' 
 group by message 
 order by Total desc
 ```
-
-<!-- vale off -->
-Message|Total
+message|Total
 |---|---|
 Virtual flexibility systematic|143
 Virtual systematic flexibility|89
@@ -69,14 +59,14 @@ incentiva ancho de banda inalámbrica|1
 implementa sistemas de siguiente generación|1
 implementa marcados eficientes|1
 
-<!-- vale on -->
+
 
 ## Event type distribution counts
 To make a pie chart like widget on all the most common events:
 ```sql
 select 
 	action_name, count(0) Total  
-from ubi_events
+from .ubi_log_events 
 group by action_name
 order by Total desc
 ```
@@ -114,27 +104,21 @@ type_filter|613
 logout|408
 
 
-## Sample search journey
-
+## Sample Search Odyssy
 Find a search in the query log:
 ```sql
 select *
-from ubi_queries
+from .ubi_log_queries
 where query_id ='1065c70f-d46a-442f-8ce4-0b5e7a71a892'
 order by timestamp
 ```
-
 (In this generated data, the `query` field is plain text; however in the real implementation the query will be in the internal DSL of the query and parameters.)
-
-<!-- vale off -->
 query_response_id|query_id|user_id|query|query_response_objects_ids|session_id|timestamp
 ---|---|---|---|---|---|---
 1065c70f-d46a-442f-8ce4-0b5e7a71a892|1065c70f-d46a-442f-8ce4-0b5e7a71a892|155_7e3471ff-14c8-45cb-bc49-83a056c37192|Blanditiis quo sint repudiandae a sit.|8659955|fa6e3b1c-3212-44d2-b16b-690b4aeddbba_1975|2027-04-17 10:16:45
-<!-- vale on -->
 
 In the event log
 Search for the events that correspond to the query above, `1065c70f-d46a-442f-8ce4-0b5e7a71a892`.
-
 ```sql
 select 
   query_id, action_name, message_type, message, event_attributes.data.data_id, event_attributes.data.description, session_id, user_id
@@ -142,9 +126,6 @@ from .ubi_log_events
 where query_id = '1065c70f-d46a-442f-8ce4-0b5e7a71a892'
 order by timestamp
 ```
-
-<!-- vale off -->
-
 query_id|action_name|message_type|message|event_attributes.data.data_id|event_attributes.data.description|session_id|user_id
 ---|---|---|---|---|---|---|---
 1065c70f-d46a-442f-8ce4-0b5e7a71a892|product_hover|INQUERY|Focused logistical policy|1692104|HP LaserJet Color CP3525dn Printer Colour 600 x 1200 DPI A4|fa6e3b1c-3212-44d2-b16b-690b4aeddbba_1975|155_7e3471ff-14c8-45cb-bc49-83a056c37192
@@ -161,8 +142,6 @@ query_id|action_name|message_type|message|event_attributes.data.data_id|event_at
 1065c70f-d46a-442f-8ce4-0b5e7a71a892|product_click|INQUERY||2073|HP LaserJet 5100tn 1200 x 1200 DPI A3|fa6e3b1c-3212-44d2-b16b-690b4aeddbba_1975|155_7e3471ff-14c8-45cb-bc49-83a056c37192
 1065c70f-d46a-442f-8ce4-0b5e7a71a892|button_click|WARN||||fa6e3b1c-3212-44d2-b16b-690b4aeddbba_1975|155_7e3471ff-14c8-45cb-bc49-83a056c37192
 
-<!-- vale on -->
-
 ## User sessions
 To look at more sessions from the same user above, `155_7e3471ff-14c8-45cb-bc49-83a056c37192`. 
 ```sql
@@ -172,10 +151,8 @@ from .ubi_log_events
 where user_id ='155_7e3471ff-14c8-45cb-bc49-83a056c37192'
 order by timestamp
 ```
-
 Results are truncated to a few sessions:
 
-<!-- vale off -->
 user_id|session_id|query_id|action_name|message_type|message|event_attributes.data.data_type|timestamp
 ---|---|---|---|---|---|---|---
 user_id|session_id|query_id|action_name|message_type|message|event_attributes.data.data_type|timestamp
@@ -267,11 +244,9 @@ user_id|session_id|query_id|action_name|message_type|message|event_attributes.da
 155_7e3471ff-14c8-45cb-bc49-83a056c37192|4aca7a9c-895f-481c-86a0-1419cec4fbcc_1974||product_sort|INQUERY||product|2027-04-17 10:16:45
 155_7e3471ff-14c8-45cb-bc49-83a056c37192|4aca7a9c-895f-481c-86a0-1419cec4fbcc_1974||brand_filter|INFO|Multi-layered next generation process improvement||2027-04-17 10:16:45
 
-<!-- vale on -->
 
 ## List user sessions that logged out without any queries
 - This query denotes users without a query_id.  Note that this could happen if the client side is not passing the returned query to other events.
-
 ```sql
 select 
     user_id, session_id, count(0) EventTotal
@@ -280,9 +255,6 @@ where action_name='logout' and query_id is null
 group by user_id, session_id
 order by EventTotal desc
 ```
-
-<!-- vale off -->
-
 user_id|session_id|EventTotal
 ---|---|---
 100_15c182f2-05db-4f4f-814f-46dc0de6b9ea|1c36712c-44b8-4fdd-8f0d-fdfeab5bd794_1290|1
@@ -305,10 +277,7 @@ user_id|session_id|EventTotal
 16_581fe410-338e-457b-a790-85af2a642356|7881141b-511b-4df9-80e6-5450415af42c_162|1
 16_581fe410-338e-457b-a790-85af2a642356|1d64478e-c3a6-4148-9a64-b6f4a73fc684_158|1
 
-<!-- vale on -->
-
 Since some of these query-less logouts repeat with some users, here is a query to see which users do this the most:
-
 ```sql
 select 
     user_id, count(0) EventTotal
@@ -317,7 +286,6 @@ where action_name='logout' and query_id is null
 group by user_id
 order by EventTotal desc
 ```
-
 user_id|EventTotal
 ---|---
 87_5a6e1f8c-4936-4184-a24d-beddd05c9274|8

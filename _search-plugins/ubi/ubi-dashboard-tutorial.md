@@ -6,6 +6,13 @@ has_children: false
 nav_order: 7
 ---
 
+{% comment %}
+# **************
+TODO: update images for new indices
+# **************
+{% endcomment %}
+
+
 # Build an analytic dashboard for UBI
 Whether you've been collecting user events and queries for a while, or [you uploaded some sample events](https://github.com/o19s/chorus-opensearch-edition/blob/main/katas/003_import_preexisting_event_data.md), now you're ready to visualize them in the dashboard using User Behavior Insights (UBI).
 
