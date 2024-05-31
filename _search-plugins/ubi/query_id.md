@@ -21,6 +21,8 @@ If the user interacts with an *object* (book, product, document) that was return
 This mermaid source is converted into an png under 
 .../images/ubi/query_id.png
 
+<!-- vale off -->
+
 ```mermaid
 %%{init: {'theme':'base',
  'themeVariables': {
@@ -72,6 +74,8 @@ sequenceDiagram
     deactivate UBI Plugin
 ```
 {% endcomment %}
+
+<!-- vale on -->
 
 <!-- vale off -->
 # The *Cute Things Animal Rescue*
