@@ -28,7 +28,6 @@ It is a causal system, linking a user's query to all subsequent user interaction
 | :--------- | :------- |
 | [UBI Request/Response Specification](https://github.com/o19s/ubi/) <br/> **References UBI Draft Specification X.Y.Z**  | Schema standard for making UBI requests and responses  |
 | [UBI OpenSearch Schema Documentation]({{site.url}}{{site.baseurl}}/search-plugins/ubi/schemas/) | Documentation on the individual Query and Event stores for OpenSearch |
-| `query_id` Data Flow <!-- ({{site.url}}{{site.baseurl}}/search-plugins/ubi/query_id/) --> | To remove? |
 
 
 | Tutorials & How-to Guides | Description
