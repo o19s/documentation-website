@@ -80,4 +80,4 @@ For example, let's see how the click position changes when there is a purchase, 
 Or let's see what event messages include "\*UBI\*" somewhere between the wildcards.
 ![UBI]({{site.url}}{{site.baseurl}}/images/ubi/ubi.png "UBI")
 
-You now have a basic dashboard that lets you look at the data. In the next kata we'll focus on some typical ecommerce driven scenarios.
+You now have a basic dashboard that lets you look at the data. In the next tutorial we'll focus on some typical ecommerce driven scenarios.
