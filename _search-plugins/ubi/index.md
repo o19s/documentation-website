@@ -26,7 +26,7 @@ It is a causal system, linking a user's query to all subsequent user interaction
 
 | Explanation & Reference | Description
 | :--------- | :------- |
-| [UBI Request/Response Specification](https://github.com/o19s/ubi/) <br/> **References UBI Draft Specification X.Y.Z**  | Schema standard for making UBI requests and responses  |
+| [UBI Request/Response Specification](https://github.com/o19s/ubi/) <br/> **References UBI Draft Specification X.Y.Z**  | Industry standard schema for making UBI requests and responses  |
 | [UBI OpenSearch Schema Documentation]({{site.url}}{{site.baseurl}}/search-plugins/ubi/schemas/) | Documentation on the individual Query and Event stores for OpenSearch |
 
 
@@ -36,7 +36,7 @@ It is a causal system, linking a user's query to all subsequent user interaction
 | [ JavaScript client structures ]({{site.url}}{{site.baseurl}}/search-plugins/ubi/data-structures/)  | Sample JavaScript structures for populating the Event store |
 | [UBI SQL queries ]({{site.url}}{{site.baseurl}}/search-plugins/ubi/sql-queries/)  | How to write analytic queries for UBI data in SQL |
 | [UBI Dashboard Tutorial]({{site.url}}{{site.baseurl}}/search-plugins/ubi/ubi-dashboard-tutorial/) | Teaches you how to build an OpenSearch dashboard with UBI data |
-| ... | teaches how to do something |
+| [Chorus Opensearch Edition](https://github.com/o19s/chorus-opensearch-edition/?tab=readme-ov-file#structured-learning-using-chorus-opensearch-edition) katas | A series of structured tutorials that teach you how to UBI with OpenSearch using a demo Ecommerce Store. |
 
 <!-- vale on -->
 Documentation adapted using concepts from [Diátaxis](https://diataxis.fr/)
