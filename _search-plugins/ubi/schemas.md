@@ -207,6 +207,8 @@ Since this schema is dynamic, the developer can add any new fields and structure
       Initializing UBI requires mapping from the **Document Index**'s primary key to this `object_id`
       </p>
 
+      <p id="object_id_field">
+         
     - `event_attributes.object.object_id_field`
         &ensp; indicates the type/class of object _and_ the name of the field in the search index that has the `object_id`.  
 
