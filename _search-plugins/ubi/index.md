@@ -14,12 +14,12 @@ redirect_from:
 **References UBI Draft Specification X.Y.Z**
 {: .label .label-purple }
 
-User Behavior Insights, or UBI, is a community plugin for capturing client-side events and queries for the purposes of improving search relevance and user experience.
+User Behavior Insights, or UBI, is a plugin for capturing client-side events and queries for the purposes of improving search relevance and user experience.
 It is a causal system, linking a user's query to all subsequent user interactions with your application until they perform another search.
 
 
 * An machine readable [schema](https://github.com/o19s/ubi) that faciliates interoperablity of the UBI specification.
-* An OpenSearch [plugin](https://github.com/o19s/opensearch-ubi) that facilitates the storage of client-side events and queries.
+* An OpenSearch [plugin](https://github.com/opensearch-project/user-behavior-insights) that facilitates the storage of client-side events and queries.
 * A client-side JavaScript [ example ]({{site.url}}{{site.baseurl}}/search-plugins/ubi/data-structures/) reference implementation that shows how to capture events and send those events to the OpenSearch UBI plugin.
 
 <!-- vale off -->
@@ -42,4 +42,3 @@ It is a causal system, linking a user's query to all subsequent user interaction
 <!-- vale on -->
 Documentation adapted using concepts from [Diátaxis](https://diataxis.fr/)
 {: .tip }
-
