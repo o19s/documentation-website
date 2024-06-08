@@ -119,7 +119,7 @@ There are 2 separate stores involed in supporting UBI data collection:
 ### 1) **UBI queries**
 All underlying query information and results ([`object_id`](#object_id)'s) are stored in the `ubi_queries` index, and remains largely invisible in the background.
 
-**UBI Queries** [schema](https://github.com/o19s/opensearch-ubi/tree/2.14.0/src/main/resources/queries-mapping.json):
+**UBI Queries** [schema](https://github.com/opensearch-project/user-behavior-insights/tree/main/src/main/resources/queries-mapping.json):
 Since UBI manages the `ubi_queries` index, the developer should never have to write directly to this store (except for importing data).
 
 - `timestamp` (events and queries) 
@@ -138,7 +138,7 @@ Since UBI manages the `ubi_queries` index, the developer should never have to wr
 
 ### 2) **UBI events**
 This is an index called `ubi_events` that the client side directly indexes events to, linking the event [`action_name`](#action_name), [`object_id`](#object_id)'s and [`query_id`](#query_id)'s together with any other important event information.
-Since this schema is dynamic, the developer can add any new fields and structures (such as *user* information, *geo-location* information) at index time that are not in the current **UBI Events** [schema](https://github.com/o19s/opensearch-ubi/tree/2.14.0/src/main/resources/events-mapping.json):
+Since this schema is dynamic, the developer can add any new fields and structures (such as *user* information, *geo-location* information) at index time that are not in the current **UBI Events** [schema](https://github.com/opensearch-project/user-behavior-insights/tree/main/src/main/resources/events-mapping.json):
 
  <p id="application"> </p>
 
