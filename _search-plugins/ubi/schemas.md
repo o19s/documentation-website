@@ -9,18 +9,18 @@ nav_order: 7
 # Key User Behavior Insights concepts
 **User Behavior Insights** (UBI) **data collection** is about linking user queries to specific actions (events) taken in response in an application.
 
-## Key Identifiers
+## Key identifiers
 UBI is not functional unless the links between the following fields are consistently maintained within a UBI-enabled application:
 
 - [`query_id`](#query_id) is a unique id for the raw query language executed and the resultant `object_id`'s (_hits_) that the query returned.  
-- [`client_id`](#client_id) represents a unique source of queries.  Typically this will be a web browser used by a unique user. 
+- [`client_id`](#client_id) represents a unique source of queries. Typically this will be a web browser used by a unique user. 
 - [`object_id`](#object_id) represents an id for whatever object the user is recieving in response to a query. For example, if you are search books, it might be a _ISBN_ code of a book such as `978-3-16-148410-0`.
 - [`object_id_field`](#object_id_field) tells us the name of the field in your index that provides the `object_id`. For the book example, the value might be `isbn_code`.
 - [`action_name`](#action_name), though not technically an *id*, the `action_name` tells us what exact user action (such as `click`, `add_to_cart`, `watch`, `view`, or `purchase`) that was taken (or not) with a given `object_id`.
 
-To summarize: the `query_id` signals the beginning of unique *Search* for a client tracked via `client_id`, returning various `object_id`'s. Every time a user performs an interaction, the `action_name` tells us what the user is performing, and is connected to the specific `object_id`'s.  We can differentiate between types of objects by looking at the `object_id_field`.  
+To summarize: the `query_id` signals the beginning of unique *Search* for a client tracked via `client_id`, returning various `object_id`'s. Every time a user performs an interaction, the `action_name` tells us what the user is performing, and is connected to the specific `object_id`'s. We can differentiate between types of objects by looking at the `object_id_field`.  
 
-Typically you will infer the user's overall *Search Journey* by looking at all the data for a `client_id` and looking at individual `query_id` data.  Each application decides what makes a *Search Session* by looking at the data in the backend.
+Typically you will infer the user's overall *Search Journey* by looking at all the data for a `client_id` and looking at individual `query_id` data. Each application decides what makes a *Search Session* by looking at the data in the backend.
 
 ## Important UBI roles
 - **Search Client**: in charge of searching, and then recieving *objects* from some document index in OpenSearch.
@@ -114,7 +114,7 @@ linkStyle 3,4,5,8 stroke-width:2px,fill:none,stroke:red
 {% endcomment %}
 
 ## UBI stores
-There are 2 separate stores involed in supporting UBI data collection:
+There are 2 separate stores involved in supporting UBI data collection:
 
 ### 1) **UBI queries**
 All underlying query information and results ([`object_id`](#object_id)'s) are stored in the `ubi_queries` index, and remains largely invisible in the background.
@@ -178,7 +178,7 @@ Since this schema is dynamic, the developer can add any new fields and structure
   {: .warning} 
 
  - **`event_attributes.position`** 
-   &ensp; structure that contains information on the location of the event origin, such as screen *x,y* coordinates, or the *n-th* object out of 10 results:
+   &ensp; structure that contains information on the location of the event origin, such as screen *x, y* coordinates, or the *n-th* object out of 10 results:
  
    - `event_attributes.position.ordinal` 
      &ensp; tracks the *n-th* item within a list that a user could select, click (i.e. selecting the 3rd element could be event{`onClick, results[4]`})
