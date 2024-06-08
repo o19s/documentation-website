@@ -32,7 +32,7 @@ It is a causal system, linking a user's query to all subsequent user interaction
 
 | Tutorials & How-to Guides | Description
 | :--------- | :------- |
-| [UBI Plugin Admin]({{site.url}}{{site.baseurl}}/search-plugins/ubi/documentation/) | How to install and use the UBI Plugin |
+| [UBI Plugin ](https://github.com/opensearch-project/user-behavior-insights) | How to install and use the UBI Plugin |
 | [ JavaScript client structures ]({{site.url}}{{site.baseurl}}/search-plugins/ubi/data-structures/)  | Sample JavaScript structures for populating the Event store |
 | [UBI SQL queries ]({{site.url}}{{site.baseurl}}/search-plugins/ubi/sql-queries/)  | How to write analytic queries for UBI data in SQL |
 | [UBI Dashboard Tutorial]({{site.url}}{{site.baseurl}}/search-plugins/ubi/ubi-dashboard-tutorial/) | Teaches you how to build an OpenSearch dashboard with UBI data |
