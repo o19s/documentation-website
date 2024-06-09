@@ -115,8 +115,36 @@ page_exit|142
 user_feedback|123
 404_redirect|123
 
+And if you like money, the following query shows distribution of margins across user actions:
+{: .warning}
 
+```sql
+select 
+    action_name, 
+    count(0) total,
+    AVG( event_attributes.object.object_detail.cost ) average_cost,
+    AVG( event_attributes.object.object_detail.margin ) average_margin
+from ubi_events  
+group by action_name
+order by average_cost desc
+```
 
+action_name|total|average_cost|average_margin
+---|---|---|---
+declined_product|395|8457.12|6190.96
+item_click|690|7789.40|5862.70
+add_to_cart|374|6470.22|4617.09
+purchase|358|5933.83|5110.69
+global_click|3555||
+product_sort|3711||
+product_hover|779||
+page_exit|107||
+on_search|5438||
+brand_filter|3722||
+user_feedback|120||
+404_redirect|110||
+view_search_results|3639||
+type_filter|3691||
 
 ## Sample search journey
 
