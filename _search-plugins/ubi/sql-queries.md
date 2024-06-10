@@ -156,11 +156,11 @@ from ubi_queries where query_id = '7ae52966-4fd4-4ab1-8152-0fd0b52bdadf'
 ```
 (The `query` field is a nested object of the OpenSearch DSL; so, it was ommitted for brevity)
 
-<!-- vale off -->
+
 client_id|query_id|user_query|query_response_hit_ids|query_response_id|timestamp
 ---|---|---|---|---|---
 a15f1ef3-6bc6-4959-9b83-6699a4d29845|7ae52966-4fd4-4ab1-8152-0fd0b52bdadf|notebook|0882780391659|6e92c90c-1eee-4dd6-b820-c522fd4126f3|2024-06-04 19:02:45.728
-<!-- vale on -->
+
 
 In the event log
 Search for the events that correspond to the query above, `7ae52966-4fd4-4ab1-8152-0fd0b52bdadf`.
@@ -202,7 +202,7 @@ order by query_id, timestamp
 
 Results are truncated to a few sessions:
 
-<!-- vale off -->
+
 application|event_attributes.session_id|query_id|action_name|message_type|event_attributes.dwell_time|event_attributes.object.object_id|event_attributes.object.description|timestamp
 ---|---|---|---|---|---|---|---|---
 ubi-demo|00731779-e290-4709-8af7-d495ae42bf48|0254a9b7-1d83-4083-aa46-e12dff86ec98|on_search|QUERY|46.6398|||2024-06-04 19:06:36.239
@@ -249,7 +249,6 @@ ubi-demo|33bd0ee2-60b7-4c25-b62c-1aa1580da73c|23f0149a-13ae-4977-8dc9-ef61c449c1
 ubi-demo|33bd0ee2-60b7-4c25-b62c-1aa1580da73c|23f0149a-13ae-4977-8dc9-ef61c449c140|type_filter|INFO|48.79312|OBJECT-32d9bb39-b17d-4611-82c1-5aaa14368060|filter_product_type|2024-06-04 19:03:50.74
 ubi-demo|33bd0ee2-60b7-4c25-b62c-1aa1580da73c|23f0149a-13ae-4977-8dc9-ef61c449c140|brand_filter|FILTER|19.54417|OBJECT-6c91da98-387b-45cb-8275-e90d1ea8bc54|supplier_name|2024-06-04 19:03:50.802
 
-<!-- vale on -->
 
 ## List user sessions that logged out without any queries
 - This query denotes users without a query_id.  Note that this could happen if the client side is not passing the returned query to other events.
