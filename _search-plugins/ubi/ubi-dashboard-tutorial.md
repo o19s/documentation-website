@@ -6,12 +6,6 @@ has_children: false
 nav_order: 7
 ---
 
-{% comment %}
-# **************
-TODO: update images for new indices
-# **************
-{% endcomment %}
-
 
 # Build an analytic dashboard for UBI
 Whether you've been collecting user events and queries for a while, or [you uploaded some sample events](https://github.com/o19s/chorus-opensearch-edition/blob/main/katas/003_import_preexisting_event_data.md), now you're ready to visualize them in the dashboard using User Behavior Insights (UBI).
@@ -54,8 +48,11 @@ Most of the visualization require some sort of aggregate function on an bucket/f
 Save that visualization and it will be added to your new dashboard. Now that you have a visualization on your dashboard, you can save your dashboard.
 
 ## 4) Add a "tag cloud" vizualization to your dashboard
-Let's add a word cloud for trending searches. Choose the Tag Cloud visualization of the terms in the `message` field where the JavaScript client logs the raw text that the user searches on. (Note: the true query, as processed by OpenSearch with filters, boosting, and so on will be in the `.{store}_queries` index, but what we are looking at is the `message` field of the `.{store}_events` index, where the JavaScript client captures what the user actually typed. )
+Let's add a word cloud for trending searches.  Choose the Tag Cloud visualization of the terms in the `message` field where the javascript client logs the raw text that the user searches on.  (Note: the true query, as processed by OpenSearch with filters, boosting, etc. will be in the `ubi_queries` index, but what we are looking at is the `message` field of the `ubi_events` index, where the javascript client captures what the user actually typed. )
 ![Word Cloud]({{site.url}}{{site.baseurl}}/images/ubi/tag_cloud1.png "Word Cloud")
+
+NOTE: The underlying queries can be found under [SQL trending queries]({{site.url}}{{site.baseurl}}/search-plugins/ubi/sql-queries/#trending-queries)
+
 
 **But there's a problem!** The `message` field is on *every* event --not only query/search events-- and can be used in anyway the client developer decides to use it; so, it can contain error messages, debug messages, click information, and so on.
 We need to add a filter to only see search terms on query events. Since the developer gave a `message_type` of `QUERY` for each search event, we will filter on that message type to isolate the specific users' searches. 
@@ -77,7 +74,8 @@ The data field we want to examine is `event_attributes.position.ordinal`, meanin
 For example, let's see how the click position changes when there is a purchase, by adding this filter `action_name:product_purchase`.
 ![Product Purchase]({{site.url}}{{site.baseurl}}/images/ubi/product_purchase.png "Product Purchase")
 
-Or let's see what event messages include "\*UBI\*" somewhere between the wildcards.
-![UBI]({{site.url}}{{site.baseurl}}/images/ubi/ubi.png "UBI")
+
+Or let's see what event messages include "\*laptop\*" somewhere between the wildcards.
+![Laptop](({{site.url}}{{site.baseurl}}/images/ubi/laptop.png "Laptop").
 
 You now have a basic dashboard that lets you look at the data. In the next tutorial we'll focus on some typical ecommerce driven scenarios.

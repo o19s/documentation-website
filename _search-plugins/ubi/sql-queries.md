@@ -59,7 +59,7 @@ group by message
 order by Total desc
 ```
 
-<!-- vale off -->
+
 Message|Total
 |---|---|
 User Behavior Insights|127
@@ -87,7 +87,7 @@ agrega modelos intuitivas|4
 bеуоnd|4
 abraza metodologías B2C|3
 
-<!-- vale on -->
+
 
 ## Event type distribution counts
 To make a pie chart like widget on all the most common events:
@@ -98,6 +98,7 @@ from ubi_events
 group by action_name
 order by Total desc
 ```
+
 action_name|Total
 |---|---|
 on_search|5425
@@ -154,13 +155,47 @@ select
   client_id, query_id, user_query, query_response_hit_ids, query_response_id, timestamp 
 from ubi_queries where query_id = '7ae52966-4fd4-4ab1-8152-0fd0b52bdadf'
 ```
-(The `query` field is a nested object of the OpenSearch DSL; so, it was ommitted for brevity)
-
-
 client_id|query_id|user_query|query_response_hit_ids|query_response_id|timestamp
 ---|---|---|---|---|---
 a15f1ef3-6bc6-4959-9b83-6699a4d29845|7ae52966-4fd4-4ab1-8152-0fd0b52bdadf|notebook|0882780391659|6e92c90c-1eee-4dd6-b820-c522fd4126f3|2024-06-04 19:02:45.728
 
+NOTE: The `query` field from this `query_id` has the following nested structure:
+
+```json
+{
+	"query": {
+		"size": 25,
+		"query": {
+			"query_string": {
+				"query": "(title:\"notebook\" OR attr_t_device_type:\"notebook\" OR name:\"notebook\")",
+				"fields": [],
+				"type": "best_fields",
+				"default_operator": "or",
+				"max_determinized_states": 10000,
+				"enable_position_increments": true,
+				"fuzziness": "AUTO",
+				"fuzzy_prefix_length": 0,
+				"fuzzy_max_expansions": 50,
+				"phrase_slop": 0,
+				"analyze_wildcard": false,
+				"escape": false,
+				"auto_generate_synonyms_phrase_query": true,
+				"fuzzy_transpositions": true,
+				"boost": 1.0
+			}
+		},
+		"ext": {
+			"query_id": "7ae52966-4fd4-4ab1-8152-0fd0b52bdadf",
+			"user_query": "notebook",
+			"client_id": "a15f1ef3-6bc6-4959-9b83-6699a4d29845",
+			"object_id_field": "primary_ean",
+			"query_attributes": {
+				"application": "ubi-demo"
+			}
+		}
+	}
+}
+```
 
 In the event log
 Search for the events that correspond to the query above, `7ae52966-4fd4-4ab1-8152-0fd0b52bdadf`.
