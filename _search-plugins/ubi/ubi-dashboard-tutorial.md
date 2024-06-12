@@ -8,9 +8,9 @@ nav_order: 7
 
 
 # Build an analytic dashboard for UBI
-Whether you've been collecting user events and queries for a while, or [you uploaded some sample events](https://github.com/o19s/chorus-opensearch-edition/blob/main/katas/003_import_preexisting_event_data.md), now you're ready to visualize them in the dashboard using User Behavior Insights (UBI).
+Whether you've been collecting user events and queries for a while, or [you uploaded some sample events](https://github.com/o19s/chorus-OpenSearch-edition/blob/main/katas/003_import_preexisting_event_data.md), now you're ready to visualize them in the dashboard using User Behavior Insights (UBI).
 
-NOTE: To check your work, we have a pre-built dashboard to import.
+NOTE: To check your work, we have a pre-built dashboard.
 Just go to Dashboards > Dashboard Management > Saved Objects, and then import this [UBI dashboard]({{site.url}}{{site.baseurl}}/assets/examples/ubi-dashboard.ndjson).
 
 ## 1) Fire up the OpenSearch dashboards
@@ -18,7 +18,7 @@ Depending on your configuration: http://localhost:5601/app/home#/
 ![Dashboard Home]({{site.url}}{{site.baseurl}}/images/ubi/home.png "Dashboards")
 
 ## 2) Create an index pattern
-http://localhost:5601/app/management/opensearch-dashboards/indexPatterns
+http://localhost:5601/app/management/OpenSearch-dashboards/indexPatterns
 ![Index Patterns]({{site.url}}{{site.baseurl}}/images/ubi/index_pattern1.png "Index Patterns")
 Index patterns are how OpenSearch dashboards access your indexes. In this case, we want to access the indexes that UBI creates, so that we can visualize your users' online, search behaviors.
 
@@ -34,7 +34,7 @@ It will prompt you to filter on any `date` field in your schema, so that you can
  Click on "Create index pattern", and you're ready to start building your dashboard pointing to your UBI store.
 
 ## 3) Create a new dashboard
-http://localhost:5601/app/opensearch_dashboards_overview#/
+http://localhost:5601/app/OpenSearch_dashboards_overview#/
 
 ![First Dashboard]({{site.url}}{{site.baseurl}}/images/ubi/first_dashboard.png "First Dashboard")
 
@@ -80,4 +80,8 @@ For example, let's see how the click position changes when there is a purchase, 
 Or let's see what event messages include "\*laptop\*" somewhere between the wildcards.
 ![Laptop]({{site.url}}{{site.baseurl}}/images/ubi/laptop.png "Laptop").
 
-You now have a basic dashboard that lets you look at the data. In the next tutorial we'll focus on some typical ecommerce driven scenarios.
+You now have a basic dashboard that lets you look at the data. 
+
+
+
+In the next tutorial we'll focus on some typical ecommerce driven scenarios.
